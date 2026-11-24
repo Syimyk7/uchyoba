@@ -245,6 +245,7 @@ html[data-bg] .btn.ico{background:rgba(255,255,255,.1);border-color:rgba(255,255
 .card .info .meta{position:absolute;left:0;right:0;bottom:13px;margin:0;font-size:12.5px;color:#d3efff;text-shadow:0 1px 6px rgba(0,20,40,.6)}
 @media (max-width:560px){.card .info .cname{font-size:16.5px}.card .info{padding:0 10px}.card .info .meta{font-size:11.5px}}
 .card .art img{width:100%;height:100%;object-fit:contain;display:block;-webkit-user-drag:none;pointer-events:none}
+.bgver{margin:10px 2px 0;font-size:11px;opacity:.55;text-align:center}
 </style>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
@@ -568,7 +569,7 @@ function emptyHTML(){
     '<div class="row"><button class="btn primary" data-act="newSubject">+ Создать предмет</button><button class="btn" data-act="samples">Добавить примеры предметов</button></div></div>';
 }
 function renderBoard(app){
-  app.innerHTML='<div class="stage"><header class="top glass"><h1 class="brand"><span class="brand-ic">'+BOOK+'</span><span class="brand-tx">Моя учёба</span></h1><div class="grow"></div><label class="srch">'+SEARCH+'<input id="q" type="search" placeholder="Поиск по конспектам…" value="'+esc(q)+'"></label><button class="sw'+(driftOn?" on":"")+'" data-act="drift" id="driftbtn" role="switch" aria-checked="'+driftOn+'" title="Плавное движение карточек"><span class="knob"></span><span class="swl">Дрейф</span></button>'+'<span class="bgwrap"><button class="btn ico" data-act="bgtoggle" title="Цвет фона" aria-label="Цвет фона">'+PALETTE+'</button><div class="bgpop" id="bgpop" hidden><div class="bgttl">Фон</div><div class="bggrid" id="bggrid"></div></div></span>'+'<button class="btn primary add" data-act="newSubject">'+PLUS+'<span class="btl">Предмет</span></button></header>'+bannerHTML()+
+  app.innerHTML='<div class="stage"><header class="top glass"><h1 class="brand"><span class="brand-ic">'+BOOK+'</span><span class="brand-tx">Моя учёба</span></h1><div class="grow"></div><label class="srch">'+SEARCH+'<input id="q" type="search" placeholder="Поиск по конспектам…" value="'+esc(q)+'"></label><button class="sw'+(driftOn?" on":"")+'" data-act="drift" id="driftbtn" role="switch" aria-checked="'+driftOn+'" title="Плавное движение карточек"><span class="knob"></span><span class="swl">Дрейф</span></button>'+'<span class="bgwrap"><button class="btn ico" data-act="bgtoggle" title="Цвет фона" aria-label="Цвет фона">'+PALETTE+'</button><div class="bgpop" id="bgpop" hidden><div class="bgttl">Фон</div><div class="bggrid" id="bggrid"></div><div class="bgver">Версия: '+APP_BUILD+'</div></div></span>'+'<button class="btn primary add" data-act="newSubject">'+PLUS+'<span class="btl">Предмет</span></button></header>'+bannerHTML()+
     '<div id="results" class="resbox"></div><div id="grid" class="canvas"></div><div id="emptybox"></div></div>';
   popNow=true;refreshBoard();popNow=false;
 }
@@ -990,6 +991,24 @@ document.addEventListener("click",function(e){
   if(act==="bgtoggle"){pop.hidden=!pop.hidden;if(!pop.hidden)fillBgGrid()}
   else if(!e.target.closest(".bgpop")&&!pop.hidden)pop.hidden=true;
 });
+
+/* автообновление */
+var APP_BUILD="2026-11-24.20";
+(function(){
+  function check(){
+    if(!navigator.onLine)return;
+    fetch(location.pathname+"?_="+Date.now(),{cache:"no-store",credentials:"same-origin"}).then(function(r){return r.ok?r.text():""}).then(function(t){
+      var m=/var APP_BUILD="([^"]+)"/.exec(t);if(!m||m[1]===APP_BUILD)return;
+      var key="sb-upd-"+m[1];try{if(sessionStorage.getItem(key))return;sessionStorage.setItem(key,"1")}catch(e){}
+      var jobs=[];
+      if(window.caches)jobs.push(caches.keys().then(function(ks){return Promise.all(ks.map(function(k){return caches.delete(k)}))}));
+      if(navigator.serviceWorker)jobs.push(navigator.serviceWorker.getRegistrations().then(function(rs){return Promise.all(rs.map(function(r){return r.unregister()}))}));
+      Promise.all(jobs).catch(function(){}).then(function(){location.reload()});
+    }).catch(function(){});
+  }
+  setTimeout(check,1500);
+  document.addEventListener("visibilitychange",function(){if(!document.hidden)check()});
+})();
 </script>
 </body>
 </html>

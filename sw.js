@@ -1,5 +1,5 @@
 /* Service worker: сеть в приоритете (с таймаутом 3 с), без сети отдаёт из кэша. */
-var V="uchyoba-v4";
+var V="uchyoba-v5";
 var SHELL=["./","index.html","manifest.json","icon-192.png","icon-512.png","content/library.json","bg/porsche.jpg","bg/skull.jpg","bg/lake.jpg","bg/mountains.jpg","bg/fir.jpg","bg/road.jpg","bg/city.jpg","bg/blue.jpg","bg/spider.jpg","bg/porsche-t.jpg","bg/skull-t.jpg","bg/lake-t.jpg","bg/mountains-t.jpg","bg/fir-t.jpg","bg/road-t.jpg","bg/city-t.jpg","bg/blue-t.jpg","bg/spider-t.jpg"];
 self.addEventListener("install",function(e){
   e.waitUntil(caches.open(V).then(function(c){return Promise.all(SHELL.map(function(u){return c.add(u).catch(function(){})}))}).then(function(){return self.skipWaiting()}));
