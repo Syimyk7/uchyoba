@@ -8,7 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <title>Моя учёба</title>
 <style>
-:root{--bg:#f6f3ee;--surface:#fff;--ink:#23211e;--muted:#7a746b;--line:#e4ded4;--accent:#3b6ea5;--hl:#fff1a6}
+:root{--bh:0;--bl:0%;--bg:#f6f3ee;--surface:#fff;--ink:#23211e;--muted:#7a746b;--line:#e4ded4;--accent:#3b6ea5;--hl:#fff1a6}
 @media (prefers-color-scheme:dark){:root{--bg:#17191c;--surface:#202327;--ink:#ecebe8;--muted:#9a9a96;--line:#31353a;--accent:#7fb0e6;--hl:#6b5d12}}
 *{box-sizing:border-box}
 html,body{margin:0}
@@ -28,8 +28,8 @@ button,input{font:inherit;color:inherit}
 .search{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:7px 12px;width:min(280px,40vw)}
 .banner{margin:14px 20px 0;padding:10px 14px;border-radius:10px;background:var(--hl);color:#3a3000;font-size:14px}
 @media (prefers-color-scheme:dark){.banner{color:#fff3c0}}
-.stage{min-height:100vh;background:radial-gradient(900px 520px at 12% 8%,rgba(90,215,205,.45),transparent 62%),radial-gradient(800px 560px at 92% 88%,rgba(96,150,230,.38),transparent 60%),linear-gradient(140deg,#e2f5f4 0%,#bfe6e8 48%,#b3d3f1 100%);background-attachment:fixed}
-@media (prefers-color-scheme:dark){.stage{background:radial-gradient(900px 520px at 12% 8%,rgba(32,150,150,.35),transparent 62%),radial-gradient(800px 560px at 92% 88%,rgba(50,90,170,.35),transparent 60%),linear-gradient(140deg,#0d2a33 0%,#10353d 50%,#142b4a 100%);background-attachment:fixed}}
+.stage{min-height:100vh;background:radial-gradient(900px 520px at 12% 8%,hsl(calc(176 + var(--bh)) 62% calc(61% + var(--bl))/.45),transparent 62%),radial-gradient(800px 560px at 92% 88%,hsl(calc(215 + var(--bh)) 72% calc(65% + var(--bl))/.38),transparent 60%),linear-gradient(140deg,hsl(calc(177 + var(--bh)) 47% calc(92% + var(--bl))) 0%,hsl(calc(184 + var(--bh)) 52% calc(82% + var(--bl))) 48%,hsl(calc(209 + var(--bh)) 68% calc(83% + var(--bl))) 100%);background-attachment:fixed}
+@media (prefers-color-scheme:dark){.stage{background:radial-gradient(900px 520px at 12% 8%,hsl(calc(180 + var(--bh)) 65% calc(36% + var(--bl))/.35),transparent 62%),radial-gradient(800px 560px at 92% 88%,hsl(calc(220 + var(--bh)) 55% calc(43% + var(--bl))/.35),transparent 60%),linear-gradient(140deg,hsl(calc(191 + var(--bh)) 58% calc(13% + var(--bl))) 0%,hsl(calc(188 + var(--bh)) 59% calc(15% + var(--bl))) 50%,hsl(calc(214 + var(--bh)) 58% calc(18% + var(--bl))) 100%);background-attachment:fixed}}
 .top.glass{background:rgba(255,255,255,.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom-color:rgba(255,255,255,.55)}
 @media (prefers-color-scheme:dark){.top.glass{background:rgba(8,28,36,.45);border-bottom-color:rgba(255,255,255,.08)}}
 .resbox{max-width:800px;margin:0 auto;padding:16px 20px 0}
@@ -191,6 +191,18 @@ svg{vertical-align:-3px}
 .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:60;display:flex;align-items:center;justify-content:center;cursor:zoom-out;padding:20px}
 .lightbox img{max-width:100%;max-height:100%;border-radius:8px}
 @media (max-width:720px){.split{grid-template-columns:minmax(0,1fr)}aside{border-right:0;border-bottom:1px solid var(--line)}.tools{top:58px}.search{width:36vw}}
+
+.bgwrap{position:relative}
+.bgpop{position:absolute;right:0;top:calc(100% + 10px);width:250px;padding:14px 16px 12px;border-radius:18px;background:rgba(255,255,255,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.8);box-shadow:0 16px 40px rgba(10,50,80,.25);z-index:50;color:#16323f}
+@media (prefers-color-scheme:dark){.bgpop{background:rgba(14,34,44,.92);border-color:rgba(255,255,255,.12);color:#e6f6ff}}
+.bgpop[hidden]{display:none}
+.bgpop label{display:block;font-size:12.5px;font-weight:600;margin:6px 0 6px;opacity:.8}
+.bgpop input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:12px;border-radius:999px;outline:none;margin:0 0 8px}
+.bgpop input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:2px solid rgba(20,60,80,.45);box-shadow:0 2px 8px rgba(0,0,0,.3);cursor:pointer}
+.bgpop input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid rgba(20,60,80,.45);box-shadow:0 2px 8px rgba(0,0,0,.3);cursor:pointer}
+#bgh{background:linear-gradient(90deg,hsl(176 62% 55%),hsl(236 62% 60%),hsl(296 62% 58%),hsl(356 70% 60%),hsl(56 75% 58%),hsl(116 60% 52%),hsl(176 62% 55%))}
+#bgl{background:linear-gradient(90deg,#0d2a33,#7fc7d0,#f2fbfb)}
+.bgpop .bgreset{width:100%;margin-top:4px;border:1px solid rgba(20,60,80,.25);background:transparent;color:inherit;border-radius:999px;padding:6px;cursor:pointer;font-size:13px}
 </style>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
@@ -350,6 +362,7 @@ var ICONS={
 };
 var SVGA='<svg viewBox="0 0 24 24" width="{w}" height="{w}" fill="none" stroke="currentColor" stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
 var SEARCH=SVGA.replace(/\{w\}/g,16).replace("{sw}",2)+'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>';
+var PALETTE=SVGA.replace(/\{w\}/g,18).replace("{sw}",2)+'<path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.8-.8 1.8-1.7 0-.5-.2-.9-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1 .8-1.7 1.8-1.7H17a4 4 0 0 0 4-4c0-4.4-4-8-9-8z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/></svg>';
 var PLUS=SVGA.replace(/\{w\}/g,16).replace("{sw}",2.4)+'<path d="M12 5v14M5 12h14"/></svg>';
 var PENCIL=SVGA.replace(/\{w\}/g,14).replace("{sw}",2)+'<path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>';
 var ARROW=SVGA.replace(/\{w\}/g,16).replace("{sw}",2.2)+'<path d="M15 5l-7 7 7 7"/></svg>';
@@ -500,7 +513,7 @@ function emptyHTML(){
     '<div class="row"><button class="btn primary" data-act="newSubject">+ Создать предмет</button><button class="btn" data-act="samples">Добавить примеры предметов</button></div></div>';
 }
 function renderBoard(app){
-  app.innerHTML='<div class="stage"><header class="top glass"><h1 class="brand"><span class="brand-ic">'+BOOK+'</span><span class="brand-tx">Моя учёба</span></h1><div class="grow"></div><label class="srch">'+SEARCH+'<input id="q" type="search" placeholder="Поиск по конспектам…" value="'+esc(q)+'"></label><button class="sw'+(driftOn?" on":"")+'" data-act="drift" id="driftbtn" role="switch" aria-checked="'+driftOn+'" title="Плавное движение карточек"><span class="knob"></span><span class="swl">Дрейф</span></button>'+((window.OFFLINE_API||dl)?'<button class="btn ico" data-act="backup" title="Сохранить резервную копию (файл)">'+DOWNLOAD+'</button>':"")+(window.OFFLINE_API?'<button class="btn ico" data-act="restore" title="Загрузить резервную копию">'+UPLOAD+'</button><input type="file" id="rfile" accept=".json,application/json" hidden>':"")+'<button class="btn primary add" data-act="newSubject">'+PLUS+'<span class="btl">Предмет</span></button></header>'+bannerHTML()+
+  app.innerHTML='<div class="stage"><header class="top glass"><h1 class="brand"><span class="brand-ic">'+BOOK+'</span><span class="brand-tx">Моя учёба</span></h1><div class="grow"></div><label class="srch">'+SEARCH+'<input id="q" type="search" placeholder="Поиск по конспектам…" value="'+esc(q)+'"></label><button class="sw'+(driftOn?" on":"")+'" data-act="drift" id="driftbtn" role="switch" aria-checked="'+driftOn+'" title="Плавное движение карточек"><span class="knob"></span><span class="swl">Дрейф</span></button>'+((window.OFFLINE_API||dl)?'<button class="btn ico" data-act="backup" title="Сохранить резервную копию (файл)">'+DOWNLOAD+'</button>':"")+(window.OFFLINE_API?'<button class="btn ico" data-act="restore" title="Загрузить резервную копию">'+UPLOAD+'</button><input type="file" id="rfile" accept=".json,application/json" hidden>':"")+'<span class="bgwrap"><button class="btn ico" data-act="bgtoggle" title="Цвет фона" aria-label="Цвет фона">'+PALETTE+'</button><div class="bgpop" id="bgpop" hidden><label>Цвет</label><input type="range" id="bgh" min="-180" max="180" step="1"><label>Яркость</label><input type="range" id="bgl" min="-14" max="10" step="1"><button class="bgreset" data-act="bgreset">Сбросить</button></div></span>'+'<button class="btn primary add" data-act="newSubject">'+PLUS+'<span class="btl">Предмет</span></button></header>'+bannerHTML()+
     '<div id="results" class="resbox"></div><div id="grid" class="canvas"></div><div id="emptybox"></div></div>';
   popNow=true;refreshBoard();popNow=false;
 }
@@ -903,6 +916,21 @@ async function init(){
 }
 init();
 })();
+
+/* фон: цветокор */
+var BG={h:0,l:0};
+try{var _b=JSON.parse(localStorage.getItem("sb-bg")||"null");if(_b){BG.h=+_b.h||0;BG.l=+_b.l||0}}catch(e){}
+function applyBG(){var r=document.documentElement.style;r.setProperty("--bh",BG.h);r.setProperty("--bl",BG.l+"%")}
+function saveBG(){try{localStorage.setItem("sb-bg",JSON.stringify(BG))}catch(e){}}
+applyBG();
+document.addEventListener("input",function(e){var t=e.target;if(t.id==="bgh"){BG.h=+t.value;applyBG();saveBG()}else if(t.id==="bgl"){BG.l=+t.value;applyBG();saveBG()}});
+document.addEventListener("click",function(e){
+  var pop=document.getElementById("bgpop");if(!pop)return;
+  var tg=e.target.closest&&e.target.closest("[data-act]");var act=tg&&tg.getAttribute("data-act");
+  if(act==="bgtoggle"){pop.hidden=!pop.hidden;if(!pop.hidden){document.getElementById("bgh").value=BG.h;document.getElementById("bgl").value=BG.l}}
+  else if(act==="bgreset"){BG.h=0;BG.l=0;applyBG();saveBG();document.getElementById("bgh").value=0;document.getElementById("bgl").value=0}
+  else if(!e.target.closest(".bgpop")&&!pop.hidden)pop.hidden=true;
+});
 </script>
 </body>
 </html>
