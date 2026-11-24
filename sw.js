@@ -1,5 +1,5 @@
 /* Service worker: сеть в приоритете (с таймаутом 3 с), без сети отдаёт из кэша. */
-var V="uchyoba-v1";
+var V="uchyoba-v3";
 var SHELL=["./","index.html","manifest.json","icon-192.png","icon-512.png","content/library.json"];
 self.addEventListener("install",function(e){
   e.waitUntil(caches.open(V).then(function(c){return Promise.all(SHELL.map(function(u){return c.add(u).catch(function(){})}))}).then(function(){return self.skipWaiting()}));
@@ -12,7 +12,7 @@ self.addEventListener("fetch",function(e){
   var r=e.request;if(r.method!=="GET")return;
   var u=new URL(r.url);if(u.origin!==location.origin)return;
   e.respondWith(
-    Promise.race([fetch(r),timeout(3000)]).then(function(res){
+    Promise.race([fetch(r.url,{cache:"no-cache",credentials:"same-origin"}),timeout(3000)]).then(function(res){
       if(res&&res.ok){var cp=res.clone();caches.open(V).then(function(c){c.put(r,cp)})}
       return res;
     }).catch(function(){

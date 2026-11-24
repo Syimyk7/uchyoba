@@ -340,7 +340,7 @@ window.addEventListener("load",function(){setTimeout(sync,400)});
 window.addEventListener("online",function(){sync()});
 document.addEventListener("visibilitychange",function(){if(!document.hidden)sync()});
 if("serviceWorker" in navigator&&location.protocol.indexOf("http")===0){
-  window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(e){console.warn("sw",e)})});
+  window.addEventListener("load",function(){var hadC=!!navigator.serviceWorker.controller;navigator.serviceWorker.addEventListener("controllerchange",function(){if(hadC&&!window.__rl){window.__rl=1;location.reload()}});navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){try{r.update()}catch(e){}}).catch(function(e){console.warn("sw",e)})});
 }
 })();
 </script>
