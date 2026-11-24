@@ -558,7 +558,7 @@ function gridHTML(){
     bottom=Math.max(bottom,p.y+CH);
     return '<div class="card'+(popNow?" pop":"")+'" tabindex="0" role="button" data-act="open" data-id="'+esc(id)+'" style="--h:'+(+s.hue||0)+';--pd:'+(i*70)+'ms;--r:'+r+'deg;--d:'+(5+k%4)+'s;--t:-'+(k%5)+'s;left:'+p.x+'px;top:'+p.y+'px">'+
       '<button class="edit" data-act="editSubject" data-id="'+esc(id)+'" aria-label="Изменить предмет">'+PENCIL+'</button>'+
-      '<div class="art">'+artHTML(s.emoji)+'</div><div class="info"><div class="cname">'+esc(s.name)+'</div><div class="meta">'+n.length+' '+plural(n.length,["тема","темы","тем"])+'</div></div>';
+      '<div class="art">'+artHTML(s.emoji)+'</div><div class="info"><div class="cname">'+esc(s.name)+'</div><div class="meta">'+n.length+' '+plural(n.length,["тема","темы","тем"])+'</div></div></div>';
   }).join("");
   var g=$("#grid");if(g)g.style.height=Math.max(bottom+90,window.innerHeight-160)+"px";
   return h;
